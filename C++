@@ -1,0 +1,94 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+void AddFront(int* Deque, int* rear) {
+	int data;  
+	cin >> data;
+	if (*rear == 0) {
+		Deque[0] = data;
+		(*rear)++;
+	}
+	else {
+		for (int i = *rear; i > 0; i--)
+			Deque[i] = Deque[i - 1];
+		Deque[0] = data;
+		(*rear)++;
+	}
+}
+
+void AddBack(int* Deque, int* rear) {
+	int data;  
+	cin >> data;
+	Deque[*rear] = data;
+	(*rear)++;
+}
+
+void PopFront(int* Deque, int* rear) {
+	if (*rear == 0)
+		cout << -1 << endl;
+	else {
+		cout << Deque[0] << endl;
+		for (int i = 1; i < *rear; i++)
+			Deque[i - 1] = Deque[i];
+		(*rear)--;
+	}
+}
+
+void PopBack(int* Deque, int* rear) {
+	if (*rear == 0)
+		cout << -1 << endl;
+	else {
+		cout << Deque[*rear - 1] << endl;
+		(*rear)--;
+	}
+}
+
+void front(int* Deque, int* rear) {
+	if (*rear == 0)
+		cout << -1 << endl;
+	else
+		cout << Deque[0] << endl;
+}
+
+void Back(int* Deque, int* rear) {
+	if (*rear == 0)
+		cout << -1 << endl;
+	else
+		cout << Deque[*rear - 1] << endl;
+}
+
+int main(void) {
+	int size, rear = 0;
+	cin >> size;
+	int* Deque = new int[size];  // 덱 생성
+
+	for (int i = 0; i < size; i++)
+	{
+		string command;  // 명령
+		cin >> command;
+		if (command == "push_front")
+			AddFront(Deque, &rear);
+		else if (command == "push_back")
+			AddBack(Deque, &rear);
+		else if (command == "pop_front")
+			PopFront(Deque, &rear);
+		else if (command == "pop_back")
+			PopBack(Deque, &rear);
+		else if (command == "empty") {
+			if (rear == 0)
+				cout << 1 << endl;
+			else
+				cout << 0 << endl;
+		}
+		else if (command == "size")
+			cout << rear << endl;
+		else if (command == "front")
+			front(Deque, &rear);
+		else if (command == "back")
+			Back(Deque, &rear);
+	}
+
+	delete[] Deque;  // 동적 메모리 해제
+	return 0;
+}
